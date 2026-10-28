@@ -1,0 +1,546 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Willie Horton Portfolio</title>
+<meta name="description" content="Automation and AI systems for sales, operations, and document work, with a person approving anything that matters.">
+<meta property="og:title" content="Willie Horton | Automation and AI systems">
+<meta property="og:description" content="Six systems in production: scheduled bid agents, a QA-gated document pipeline, a follow-up CRM, an estimate drafter, a daily planner, and a personal agent stack.">
+<meta property="og:url" content="https://williehorton.github.io/">
+<meta property="og:image" content="https://williehorton.github.io/img/cadence-board.jpg">
+<meta property="og:type" content="website">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow reading column, case studies as numbered dossiers with a facts rail */
+:root{
+  --bg:#ffffff; --surface:#fafafa; --ink:#111111; --ink-2:#444444; --ink-3:#777777;
+  --line:#e6e6e6; --accent:#0a66c2; --accent-ink:#ffffff; --warn:#7a5a1e; --warn-bg:#f5efe3;
+  --display:'Fraunces',Georgia,serif; --body:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111111; --surface:#181818; --ink:#f2f2f2; --ink-2:#bdbdbd; --ink-3:#8a8a8a;
+  --line:#2a2a2a; --accent:#7ab4f0; --accent-ink:#111111; --warn:#d6b77a; --warn-bg:#2a2418; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111111; --surface:#181818; --ink:#f2f2f2; --ink-2:#bdbdbd; --ink-3:#8a8a8a;
+  --line:#2a2a2a; --accent:#7ab4f0; --accent-ink:#111111; --warn:#d6b77a; --warn-bg:#2a2418; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 80px}
+main{max-width:860px;margin:0 auto;display:grid;gap:56px}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5vw,50px)}
+h2{font-size:26px}
+h3{font-size:22px}
+p{margin:0;max-width:66ch}
+a{color:var(--accent)}
+.eyebrow{font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+header{display:grid;gap:20px;padding-bottom:36px;border-bottom:1px solid var(--line)}
+.lede{font-size:19px;color:var(--ink-2);max-width:62ch}
+.contact{display:flex;flex-wrap:wrap;gap:12px 24px;font-size:14px}
+.contact span{color:var(--ink-2)}
+.stack{display:flex;flex-wrap:wrap;gap:8px}
+.stack li{list-style:none;font-size:13px;padding:5px 10px;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+ul,ol{margin:0;padding-left:0}
+section{display:grid;gap:20px}
+.cases{display:grid;gap:40px}
+article{display:grid;gap:18px;padding-top:28px;border-top:1px solid var(--line)}
+.head{display:grid;gap:10px}
+.head .eyebrow{color:var(--accent)}
+.scene{font-size:17px;color:var(--ink-2)}
+.summary{font-size:17px}
+details{border:1px solid var(--line);background:var(--surface)}
+summary{cursor:pointer;padding:12px 18px;font-weight:500;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::after{content:"+";color:var(--ink-3)}
+details[open] summary::after{content:"\2212"}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px 20px;padding:16px 18px;background:var(--surface);border:1px solid var(--line)}
+.facts div{display:grid;gap:3px;min-width:0}
+.facts dt{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.facts dd{margin:0;font-size:14px;font-variant-numeric:tabular-nums}
+.body{padding:0 18px 18px;display:grid;gap:14px;border-top:1px solid var(--line);padding-top:14px}
+.body h4,.guard h4{margin:0;font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.body ul{padding-left:18px;display:grid;gap:4px}
+.body li{max-width:66ch}
+.fill{background:var(--warn-bg);color:var(--warn);font-family:var(--mono);font-size:13px;padding:1px 6px;border-radius:2px}
+.proof{border-left:3px solid var(--accent);padding-left:14px;color:var(--ink-2)}
+figure{margin:0;display:grid;gap:8px}
+figure svg{max-width:100%;height:auto;display:block}
+figcaption{font-size:13px;color:var(--ink-3);max-width:66ch}
+.panel{background:var(--surface);border:1px solid var(--line);padding:14px 18px;display:grid;gap:8px}
+.panel h4{margin:0;font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.panel ol{padding-left:20px;display:grid;gap:4px;font-size:14px}
+.panel li{max-width:66ch}
+.panel code,.rules code{font-family:var(--mono);font-size:13px}
+.rules{width:100%;border-collapse:collapse;font-size:14px}
+.rules th,.rules td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.rules th{font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.tablewrap{overflow-x:auto}
+.shot{margin:0;display:grid;gap:8px}
+.shot img{width:100%;height:auto;display:block;border:1px solid var(--line);background:var(--surface)}
+.chat{display:grid;gap:10px;padding:16px 18px;background:var(--surface);border:1px solid var(--line);font-size:14px}
+.chat .m{display:grid;gap:2px;max-width:60ch}
+.chat .m.me{justify-self:end;text-align:right}
+.chat .who{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.chat .t{padding:8px 12px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.chat .m.me .t{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.agents{width:100%;border-collapse:collapse;font-size:14px}
+.agents th,.agents td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.agents th{font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.guard{display:grid;gap:8px}
+.guard ul{padding-left:18px;display:grid;gap:4px}
+.guard li{max-width:66ch}
+.principles{display:grid;gap:18px}
+.principles li{list-style:none;display:grid;gap:4px;max-width:66ch}
+.principles b{font-family:var(--display);font-weight:600;font-size:18px}
+.no{display:grid;gap:12px}
+.no li{list-style:none;max-width:66ch;padding-left:18px;position:relative}
+.no li::before{content:"";position:absolute;left:0;top:.65em;width:8px;height:2px;background:var(--accent)}
+.also{display:grid;gap:10px}
+.also li{list-style:none;display:grid;grid-template-columns:180px 1fr;gap:12px;font-size:15px}
+.also li span:first-child{font-weight:500}
+@media (max-width:560px){.also li{grid-template-columns:1fr}}
+footer{border-top:1px solid var(--line);padding-top:20px;font-size:14px;color:var(--ink-3)}
+</style>
+
+<main>
+<header>
+  <p class="eyebrow">Willie Horton, Vancouver, Washington</p>
+  <h1>I build automation and AI systems for sales, operations, and document work, with a person approving anything that matters.</h1>
+  <p class="lede">I spent fourteen years running retail sales teams, up to ten reps at a time, and filling in as Area Manager when the job needed it. That work was hiring, onboarding, scheduling, coaching, and reporting: the systems that run a team and show where time and revenue are being lost.</p>
+  <p class="lede">When I moved into construction and environmental remediation as an estimator and sales lead, I saw the same losses with no system behind them: leads waiting a day for a reply, bids missed, estimates with errors. I had been building automations for small businesses since 2020, so I built them for my own work, then for fifteen clients and a regional health plan. The approach is the same each time: find where the hours and dollars go, build the smallest fix that works, put a person at the approval step, document it, and train the people who use it. The six systems below are the results.</p>
+  <div class="contact">
+    <span>willie.c.horton@gmail.com</span>
+    <span>Vancouver, WA (Portland metro)</span>
+    <span><a href="https://www.linkedin.com/in/williechorton">linkedin.com/in/williechorton</a></span>
+    <span><a href="https://github.com/williehorton">github.com/williehorton</a></span>
+  </div>
+  <ul class="stack" aria-label="Tools I work in every week">
+    <li>Claude Code</li><li>Python</li><li>n8n</li><li>Zapier</li><li>Make</li><li>Airtable</li><li>Google Workspace</li><li>JobTread</li><li>PandaDoc</li><li>QuickBooks</li><li>Lovable</li><li>Obsidian</li>
+  </ul>
+</header>
+
+<section>
+  <h2>Six systems</h2>
+  <p class="lede">Each one is in use or was used in a real organization. For each: the problem, what I built, what the AI is not allowed to do, what went wrong, and what someone else needs to run it. Orange marks a figure I still have to pull from the logs. None of the numbers are estimates.</p>
+</section>
+
+<section class="cases">
+
+<article>
+  <div class="head">
+    <p class="eyebrow">01. Scheduled agents, Airtable, Google Docs</p>
+    <h3>Bid Radar and Bid Desk</h3>
+    <p class="scene">An environmental services company qualified for public-sector contracts but rarely saw them. Solicitations were spread across a dozen procurement sites, and checking them was nobody's assigned job. A dozen portals and thirty search terms every week is more than one person can keep up with alongside a sales role.</p>
+    <p class="summary">I built two scheduled agents. Bid Radar runs every Monday morning, searches Portland and Seattle procurement sites, grades each solicitation A, B, or C against the company's services, and writes it to Airtable. Bid Desk runs every weekday, drafts a response package as a Google Doc, and uses only company facts a person has marked verified. Neither agent can submit, send, or set a price. The company reviews a graded list each Monday instead of searching sites; bid decisions stay with the company.</p>
+  </div>
+
+    <dl class="facts">
+    <div><dt>Role</dt><dd>Built it, run it, review every package</dd></div>
+    <div><dt>In production</dt><dd>Radar since Sept 11, Desk since Oct 13, 2026</dd></div>
+    <div><dt>Reliability</dt><dd>8 of 8 weekly sweeps completed unattended</dd></div>
+    <div><dt>Found and graded</dt><dd>136 solicitations; 40 rated A or B, worth pursuing</dd></div>
+    <div><dt>Open now</dt><dd>78 live opportunities; 8 response packages drafted</dd></div>
+  </dl>
+  <figure>
+    <svg viewBox="0 0 860 230" role="img" aria-label="Procurement sites feed Bid Radar weekly into Airtable; Bid Desk reads Airtable on weekdays and writes draft packages; a person reviews and submits.">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <g fill="none" stroke="currentColor" stroke-width="1.2" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="12">
+        <rect x="10" y="70" width="150" height="56" rx="2"/>
+        <text x="85" y="92" text-anchor="middle" fill="currentColor" stroke="none">Procurement sites</text>
+        <text x="85" y="110" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">12 portals, 30 terms</text>
+        <rect x="220" y="70" width="140" height="56" rx="2"/>
+        <text x="290" y="92" text-anchor="middle" fill="currentColor" stroke="none">Bid Radar</text>
+        <text x="290" y="110" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">Mondays, 6 AM</text>
+        <rect x="420" y="20" width="150" height="56" rx="2"/>
+        <text x="495" y="42" text-anchor="middle" fill="currentColor" stroke="none">Opportunities</text>
+        <text x="495" y="60" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">graded A, B, C</text>
+        <rect x="420" y="120" width="150" height="56" rx="2"/>
+        <text x="495" y="142" text-anchor="middle" fill="currentColor" stroke="none">Sweep Log</text>
+        <text x="495" y="160" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">incl. could not access</text>
+        <rect x="630" y="20" width="140" height="56" rx="2"/>
+        <text x="700" y="42" text-anchor="middle" fill="currentColor" stroke="none">Bid Desk</text>
+        <text x="700" y="60" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">weekdays, 7 AM</text>
+        <rect x="630" y="120" width="140" height="56" rx="2" stroke="var(--accent)" stroke-width="2"/>
+        <text x="700" y="142" text-anchor="middle" fill="currentColor" stroke="none">A person</text>
+        <text x="700" y="160" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">prices, signs, submits</text>
+        <line x1="160" y1="98" x2="218" y2="98" marker-end="url(#ar)"/>
+        <text x="189" y="90" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">reads</text>
+        <line x1="360" y1="90" x2="418" y2="52" marker-end="url(#ar)"/>
+        <text x="392" y="62" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">writes</text>
+        <line x1="360" y1="106" x2="418" y2="144" marker-end="url(#ar)"/>
+        <text x="392" y="140" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">logs</text>
+        <line x1="570" y1="48" x2="628" y2="48" marker-end="url(#ar)"/>
+        <text x="599" y="40" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">reads</text>
+        <line x1="700" y1="76" x2="700" y2="118" marker-end="url(#ar)"/>
+        <text x="760" y="100" text-anchor="start" fill="currentColor" stroke="none" font-size="11">draft packages</text>
+        <text x="700" y="210" text-anchor="middle" fill="currentColor" stroke="none" font-size="11">no submit, no send, no price</text>
+        <line x1="630" y1="196" x2="770" y2="196" stroke-dasharray="3 3"/>
+      </g>
+    </svg>
+    <figcaption>Flow of the two agents. Steps left of the outlined box run automatically. Pricing, signing, and submitting are done by a person.</figcaption>
+  </figure>
+  <div class="tablewrap">
+  <table class="rules" aria-label="Sample of open opportunities found by Bid Radar">
+    <thead><tr><th>Grade</th><th>Type</th><th>Agency</th><th>Solicitation</th><th>Due</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td>Roster</td><td>Portland State University</td><td>On-call program, construction services (RFQ 1736)</td><td>Oct 2029</td></tr>
+      <tr><td>A</td><td>Roster</td><td>MRSC, shared WA roster</td><td>Small works and vendor roster used by Seattle, Tacoma Housing Authority, UW, WA State Parks and others</td><td>Rolling</td></tr>
+      <tr><td>A</td><td>Sub-qualification</td><td>Saybr, Forma, BNBuilders, GLY</td><td>Job-order-contract primes taking subcontractors (Bellevue, Seattle, UW)</td><td>Rolling</td></tr>
+      <tr><td>B</td><td>Bid</td><td>City of Seattle Parks</td><td>Dahl Playfield restroom renovation, fire-damaged building, sub-bids</td><td>Oct 28, 2026</td></tr>
+      <tr><td>B</td><td>Bid</td><td>Oregon DOT</td><td>I-84 Union Pacific bridge replacement, Hood River, asbestos removal sub-scope</td><td>Nov 5, 2026</td></tr>
+      <tr><td>B</td><td>Bid</td><td>Renton School District</td><td>Renton High School replacement, painting and final clean bid packages</td><td>Dec 2, 2026</td></tr>
+      <tr><td>B</td><td>Roster</td><td>Oregon Health Authority</td><td>Lead-based paint remediation services, price agreement</td><td>Jan 2029</td></tr>
+      <tr><td>B</td><td>Watch</td><td>U.S. Veterans Affairs, Roseburg</td><td>Building 1 refresh: painting, ceilings, flooring, asbestos floor abatement</td><td>Not posted</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="eyebrow">Eight of the 78 open rows in the Opportunities table, as graded by the agent. All public solicitations; contact fields omitted.</p>
+  <div class="guard">
+    <h4>How it keeps itself honest</h4>
+    <ul>
+      <li>Each opportunity is graded A, B, or C against the company's service lines, so the reviewer reads 40 items instead of 136.</li>
+      <li>Expired items close automatically (60 so far), so the list is always current.</li>
+      <li>Each sweep writes a log of what it checked and what it could not reach.</li>
+    </ul>
+    <h4>Lines the AI cannot cross</h4>
+    <ul>
+      <li>No invented company facts. License numbers, insurance limits, and past-performance claims come only from rows marked verified.</li>
+      <li>No pricing. Pricing is judgment and liability. It stays with a person.</li>
+      <li>No sending. The agent writes drafts. A person hits send.</li>
+    </ul>
+  </div>
+  <details>
+    <summary>What broke, handover</summary>
+    <div class="body">
+      <h4>What broke</h4>
+      <ul>
+        <li>Unattended runs cannot answer the browser's permission prompts, so several Oregon portals go unread each week and results skew toward Washington. The sweep logs every source it could not open in a Could Not Access field, so a thin week reads as blocked rather than quiet. Still open: pre-approving those sites so the agent can read them without a person present.</li>
+      </ul>
+      <h4>Handover</h4>
+      <ul>
+        <li>The rules live in a written task definition and a Company Profile table, not in my memory. A new operator reads two pages and runs it.</li>
+      </ul>
+      <p class="proof">Evidence to attach: dated screenshot of the Opportunities table and one redacted response package.</p>
+    </div>
+  </details>
+
+</article>
+
+<article>
+  <div class="head">
+    <p class="eyebrow">02. Decision logic: one design, three implementations</p>
+    <h3>Follow-up priority logic that computes who to call first</h3>
+    <p class="scene">One salesperson with about forty open conversations and no system for follow-up order. Leads went cold not because they were difficult but because they arrived on busy days and nothing tracked who had waited longest.</p>
+    <p class="summary">I designed the priority logic first, as a written specification: pipeline stage, last inbound message, last outbound message, and a one-hour first-response standard feed one formula that sorts the list each morning. It was built first as an Airtable CRM with automatic email intake, then carried into a follow-up dashboard built on Lovable and Supabase, and the stage logic now also drives the company's lead system through a Calendly webhook. The tools changed; the rules did not. There is no AI in it: priority is a rule, and a rule gives the same answer every time.</p>
+  </div>
+
+    <dl class="facts">
+    <div><dt>Role</dt><dd>Designed the logic; built all three versions</dd></div>
+    <div><dt>Implementations</dt><dd>Airtable CRM, Lovable dashboard, BuildLedger webhook</dd></div>
+    <div><dt>Logic</dt><dd>7 stages, 4 priority levels, 6 reply states</dd></div>
+    <div><dt>Standard</dt><dd>First contact within 1 hour, same business day</dd></div>
+    <div><dt>AI involved</dt><dd>None in v1, by choice</dd></div>
+  </dl>
+  <div class="tablewrap">
+  <table class="rules" aria-label="Priority rules by pipeline stage">
+    <thead><tr><th>Stage</th><th>Situation</th><th>Priority</th><th>Follow-up due</th></tr></thead>
+    <tbody>
+      <tr><td>Initial inquiry</td><td>New inbound, no reply yet</td><td>Critical</td><td>1 hour, same business day</td></tr>
+      <tr><td>Initial inquiry</td><td>We reached out, waiting on them</td><td>Low</td><td>24 hours from last touch</td></tr>
+      <tr><td>Initial inquiry</td><td>They replied after our outreach</td><td>High, then Critical if we miss the window</td><td>Same day</td></tr>
+      <tr><td>Site visit set</td><td>Visit booked</td><td>Low unless they message</td><td>None until the visit</td></tr>
+      <tr><td>Site visit complete</td><td>Summary sent, estimate not drafted</td><td>Rises after 48 hours</td><td>48 hours from summary</td></tr>
+      <tr><td>Estimate complete</td><td>Waiting on internal approval</td><td>Rises after 24 hours</td><td>24 hours</td></tr>
+      <tr><td>Estimate sent</td><td>No reply from customer</td><td>Low, then High at 3 days</td><td>3 days from send</td></tr>
+      <tr><td>Won or Lost</td><td>Closed</td><td>None</td><td>Timer stops</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="eyebrow">The priority rules, as specified before the first build. The same table governed all three implementations.</p>
+  <div class="guard">
+    <h4>Why there is no AI in it</h4>
+    <ul>
+      <li>A model should not decide which customer waits. The formula can be read, tested, and audited. I use AI for reading and writing text, not for ranking or arithmetic.</li>
+    </ul>
+  </div>
+  <details>
+    <summary>What I cut, handover</summary>
+    <div class="body">
+      <h4>What I cut from version one</h4>
+      <ul>
+        <li>Notes field, estimate amounts, multiple owners, calendar sync. Each was requested and deferred until real use showed it was needed. Most were not.</li>
+      </ul>
+      <h4>Handover</h4>
+      <ul>
+        <li>Every rule was written down in plain English before the first build, one line per decision. That is what made it portable: each new tool was implemented from the same page, not from the previous tool.</li>
+      </ul>
+      <p class="proof">Ask me for the priority formula itself and a week of follow-up dates marked hit or miss.</p>
+    </div>
+  </details>
+
+</article>
+
+<article>
+  <div class="head">
+    <p class="eyebrow">03. Product build: React, design system, rules engine</p>
+    <h3>Cadence, a daily planner that holds you to a standard</h3>
+    <p class="scene">My sales role has a written performance standard: estimates entered within 24 hours, leads reviewed on set days, a daily check-in, a monthly sales target. Standards in a memo are easy to lose track of. I wanted mine on the same screen where I plan my day, with the checks built in.</p>
+    <p class="summary">Cadence is a daily planner, modeled on Sunsama, with the standard built in as rules. Rule items appear on the day board automatically from stored data. A completion guard reverts any check-off whose required fields are empty, so a task cannot be marked done until the required information is filled in. A scheduled morning job loads the email list from a task database, read-only. Colors, spacing, and type are defined once as tokens and measured from real product stylesheets.</p>
+  </div>
+
+    <dl class="facts">
+    <div><dt>Role</dt><dd>Spec, design, and build; sole user</dd></div>
+    <div><dt>Size</dt><dd>100 source files, 24,000 lines, 19 feature modules</dd></div>
+    <div><dt>Stack</dt><dd>React 19, Vite, zustand, CSS Modules</dd></div>
+    <div><dt>Built</dt><dd>October 2026; in daily use</dd></div>
+  </dl>
+  <figure class="shot">
+    <img src="img/cadence-board.jpg" alt="Cadence day board showing three day columns with task cards, a calendar rail on the right, and the sidebar with daily, weekly, and team cadence sections" width="2200" height="1466">
+    <figcaption>The day board with the app's sample data. Each column is a workday; the rail on the right is the calendar for the selected day.</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="img/cadence-guard.png" alt="Task detail for a scope visit after an attempted check-off: the title, a Scope tag, the note 2 to fill before done, and the required Client and address field outlined in red" width="2680" height="1215">
+    <figcaption>The completion guard. This task was checked off with its required fields empty; the check-off was reverted and the detail opened on the first missing field, with the count of fields still to fill.</figcaption>
+  </figure>
+  <div class="guard">
+    <h4>How it was built</h4>
+    <ul>
+      <li>A written build contract is the single source of truth. It names the foundation files (store, types, tokens, design system) that cannot be changed without an explicit decision.</li>
+      <li>Design research first: the real production stylesheet of the reference app was checked in and measured, and the restyle was done against those values. Fonts are self-hosted; motion runs on one shared duration and easing.</li>
+      <li>Feature modules include accessibility, undo, keyboard shortcuts, drag and drop, search, and theming. The build must pass before any commit.</li>
+    </ul>
+  </div>
+  <details>
+    <summary>What is missing, handover</summary>
+    <div class="body">
+      <h4>What is missing</h4>
+      <ul>
+        <li>No automated tests yet. The completion guard and the importer are the two places that need them first, and they are next.</li>
+        <li>Single user by design. Multi-user would mean a backend and an auth model I have deliberately not built.</li>
+      </ul>
+      <h4>Handover</h4>
+      <ul>
+        <li>The contract and a short handoff document describe the architecture, the rules, and the open items. Anyone who reads them can pick up the next commit.</li>
+      </ul>
+      <p class="proof">The code is private. I am glad to walk through the board, the guard, and the morning feed on a call.</p>
+    </div>
+  </details>
+
+</article>
+
+<article>
+  <div class="head">
+    <p class="eyebrow">04. Grounded generation, catalog constraints</p>
+    <h3>An estimate drafter that cannot invent a line item</h3>
+    <p class="scene">As account manager and estimator for a Portland general contractor, I wrote thirty to forty proposals a month. A bathroom remodel estimate could take an afternoon, most of it looking up catalog items, entering them, and doing the arithmetic by hand. That year the company grew from $1.3M to $3.6M in gross revenue, and estimating was the bottleneck.</p>
+    <p class="summary">I built a prompt that turns scope notes and measurements into a line-item proposal using only the company's approved Zoho item catalog. Project management and mobilization are fixed percentages. If the work needs an item not in the catalog, the draft says so and stops. Every line prints its dimensions, its source, and its math so a reviewer can check it quickly. The estimator's job became reviewing a draft instead of building one.</p>
+  </div>
+
+    <dl class="facts">
+    <div><dt>Role</dt><dd>Estimator; built it, used it</dd></div>
+    <div><dt>Catalog</dt><dd>Exact item IDs, names, rates only</dd></div>
+    <div><dt>Fixed math</dt><dd>PM 3.123%, mobilization 3.43%</dd></div>
+    <div><dt>Output</dt><dd>Staged, confirmed section by section, then JSON</dd></div>
+  </dl>
+  <div class="panel">
+    <h4>What the prompt enforces</h4>
+    <ol>
+      <li>Items come only from the approved catalog export, by exact ID, name, and rate. No synonyms, no near matches.</li>
+      <li>Labor and material quantities are paired per line; a material line without its labor line is an error.</li>
+      <li>Project management is 3.123% of materials, sub labor, sub materials, and finish materials. Mobilization is 3.43% of the labor subtotal. Both fixed.</li>
+      <li>Permits, engineering, and plans appear only when the scope requests them.</li>
+      <li>Each section is drafted, then confirmed by the estimator, before the next section is drafted.</li>
+      <li>Every line prints what is happening and why, the dimensions and measurements, where each number came from, and the arithmetic.</li>
+      <li>Final output is customer-keyed JSON for the estimating system, produced only after approval.</li>
+    </ol>
+    <p class="eyebrow">The rule set from the prompt, as specified in September 2025.</p>
+  </div>
+  <div class="guard">
+    <h4>Lines the AI cannot cross</h4>
+    <ul>
+      <li>Nothing outside the catalog, ever.</li>
+      <li>No permits, engineering, or plans unless asked.</li>
+      <li>No hidden calculations. "Show the math" is a hard rule.</li>
+    </ul>
+  </div>
+  <details>
+    <summary>What I learned, handover</summary>
+    <div class="body">
+      <h4>What I learned</h4>
+      <ul>
+        <li>The model is good at matching work to catalog items and writing descriptions, and unreliable at arithmetic across a long proposal. Requiring it to show the math made the output checkable. I apply the same rule in every system I build.</li>
+      </ul>
+      <h4>Handover</h4>
+      <ul>
+        <li>The prompt is one document with its rules at the top. Anyone with the catalog export can run it.</li>
+      </ul>
+      <p class="proof">On request: one AI-drafted estimate beside the corrected version, math visible.</p>
+    </div>
+  </details>
+
+</article>
+
+<article>
+  <div class="head">
+    <p class="eyebrow">05. Document standardization agent, automated QA: 124 documents delivered</p>
+    <h3>An agent that standardizes pharmacy prior-authorization criteria for a major healthcare provider</h3>
+    <p class="scene">A regional health plan's pharmacy team needed one formatted prior-authorization criteria document per drug, assembled from a template, a published criteria PDF, and a quantity-limit list. Formatting had to match the template exactly and criteria wording had to be verbatim, because these documents inform coverage decisions. The agent never writes a document from scratch; it edits a copy of the approved template and every edit is checked before a person sees the result.</p>
+    <p class="summary">The agent extracts criteria word for word and runs eight automated checks after every build, from template preservation at the byte level to a cross-check of each approval duration against its source sentence. If any check fails, the document is not shown. It works from published criteria only, uses no patient data, and is separated from every other client's files. A batch of 33 drugs is delivered as 33 documents that have already passed all checks, ready for one review.</p>
+  </div>
+
+    <dl class="facts">
+    <div><dt>Role</dt><dd>Sole builder, contract engagement</dd></div>
+    <div><dt>Delivered</dt><dd>124 documents, 6 batches, Aug to Oct 2026</dd></div>
+    <div><dt>QA</dt><dd>8 automated checks; 124 of 124 pass</dd></div>
+    <div><dt>Data</dt><dd>Published criteria, no patient data</dd></div>
+  </dl>
+  <div class="panel">
+    <h4>The eight checks, from the builder's QA script</h4>
+    <ol>
+      <li><code>check_template_preservation</code>: the output's archive members match the template byte for byte except the parts the builder is allowed to touch.</li>
+      <li><code>check_container_integrity</code>: the .docx container is structurally valid after surgery.</li>
+      <li><code>check_sectpr</code>: section properties, page size, and margins identical to the template.</li>
+      <li><code>check_table_and_title</code>: the criteria table matches the template except the two changed cells; title formatting untouched.</li>
+      <li><code>check_numbering_refs</code>: list numbering is additive only; original definitions untouched, each added list a faithful clone.</li>
+      <li><code>check_content</code>: no placeholder text, no invented identifiers, every criteria line present verbatim, every approval duration cross-checked against its own source sentence.</li>
+      <li><code>check_footer</code>: Revised and Effective dates landed where the template expects them, or were deliberately blanked.</li>
+      <li><code>check_python_docx</code>: the document reopens cleanly in a second library with the fields that must be blank confirmed blank.</li>
+    </ol>
+    <p class="eyebrow">Any failed check blocks the document. The script gates on exit codes, not log text, so a crash cannot be mistaken for a pass.</p>
+  </div>
+  <div class="guard">
+    <h4>Lines the AI cannot cross</h4>
+    <ul>
+      <li>No clinical inference. No invented identifiers, no assumed approval duration, no paraphrased criteria.</li>
+      <li>No sending. Output lands in a review folder.</li>
+      <li>No contact with any other client's files or agents.</li>
+    </ul>
+  </div>
+  <details>
+    <summary>What broke, handover</summary>
+    <div class="body">
+      <h4>What broke</h4>
+      <ul>
+        <li>A QA check had its own bug. The approval-duration test hardcoded the phrase "for 12 months," so it only ever confirmed that 12-month pathways were 12-month pathways. A drug with a 24-month pathway failed it, and the failure was in the check, not the document. I rewrote it to compare against whatever duration the source declares, which also catches the reverse error the old version could never see: a source stating a duration the document omits.</li>
+        <li>Rules that lived only in a working session faded between sessions, and the agent drifted back to default behavior. Every rule now lives in the definition the agent reads on every run, with a backup saved before each policy change.</li>
+      </ul>
+      <h4>What maturity looks like</h4>
+      <ul>
+        <li>The sixth batch of 33 drugs needed no new QA rules; existing checks handled everything it raised. Where a source document was malformed (a date with three digits in the day field), the agent transcribed it as written and flagged it rather than guessing a correction.</li>
+      </ul>
+      <h4>Handover</h4>
+      <ul>
+        <li>A README documents the writer strategy and every QA check. Adding a drug means adding one data file. Shared code never changes.</li>
+      </ul>
+      <p class="proof">Client documents are not shown. The QA checks above are the public record of how each one was verified.</p>
+    </div>
+  </details>
+
+</article>
+
+<article>
+  <div class="head">
+    <p class="eyebrow">06. Research bench: multi-agent orchestration</p>
+    <h3>Luna, a personal multi-agent system used as a test bench</h3>
+    <p class="scene">A dedicated Mac mini runs a small set of named agents under one governance document, handling my own calendar, mail, and notes. I use it to test approval, isolation, and monitoring patterns before using them in client work.</p>
+    <p class="summary">Each agent proposes an action; nothing runs until I approve it by text message. Current jobs: a morning digest of commitments pulled from mail and meeting notes, and family calendar reminders sent after I approve them. Agents run as a non-admin user on a separate Apple ID, with heartbeat monitoring and a written restart procedure. No agent gets a self-improvement loop until it has a test set to grade itself against.</p>
+  </div>
+
+    <dl class="facts">
+    <div><dt>Role</dt><dd>Architect, builder, only user</dd></div>
+    <div><dt>Live since</dt><dd>October 2026</dd></div>
+    <div><dt>Approval model</dt><dd>Draft and queue; approve or drop by text</dd></div>
+    <div><dt>Monitoring</dt><dd>Heartbeat checks, restart checklist</dd></div>
+  </dl>
+  <div class="chat" aria-label="Excerpts from the approval thread with Luna">
+    <div class="m me"><span class="who">Me, Oct 7, 9:23 PM</span><span class="t">SEND 3</span></div>
+    <div class="m"><span class="who">Luna</span><span class="t">Quiet hours, and the schedule is not up for debate. Draft 3 to [my wife] is approved and goes out at 7:00 AM. If you want it stopped, text DROP 3 before then.</span></div>
+    <div class="m"><span class="who">Luna, Oct 8, 7:00 AM</span><span class="t">2 updates: 1) heartbeat: 2/2 ok. Disk 90% free. Ollama up. Vault clean. Spend $0.00 yesterday, $0.00 today. 2) Draft 3 sent to [my wife].</span></div>
+    <div class="m me"><span class="who">Me, Oct 8, 3:36 PM</span><span class="t">Text [my wife] something funny</span></div>
+    <div class="m"><span class="who">Luna</span><span class="t">Nothing is queued for [my wife] right now, and I can't send from chat. My 7 a.m. promise earlier was wrong, so I'm correcting it. If you want a funny one, you can send this yourself.</span></div>
+    <div class="m me"><span class="who">Me, Oct 9</span><span class="t">What can you do?</span></div>
+    <div class="m"><span class="who">Luna</span><span class="t">Commands I answer to: LIST, SEND n, DROP n, APPROVE n, TASKS, STOP ALL, and RESUME. I keep the queue, approve or drop items on your word, and handle schedule heads-ups to [my wife]. I don't act on chat requests.</span></div>
+  </div>
+  <p class="eyebrow">From the Messages database, October 2026. The agent held an approved send until quiet hours ended, refused a request that bypassed the queue, and corrected an earlier statement. The daily heartbeat has run every morning since Oct 9; inference runs locally, so the spend line reads zero.</p>
+  <div class="guard">
+    <h4>Lines the agents cannot cross</h4>
+    <ul>
+      <li>No message sent, no file changed outside their own folder, without an approved queue item.</li>
+      <li>No mixing of work and personal data. Separate machines, by policy.</li>
+      <li>No remote commands. One pinned key reaches a dispatcher gate; administration happens at the keyboard.</li>
+    </ul>
+  </div>
+  <details>
+    <summary>What broke</summary>
+    <div class="body">
+      <h4>What broke</h4>
+      <ul>
+        <li>A scheduled job stalled overnight on a permission prompt nobody was awake to answer. Now every unattended job runs under pre-approved scopes, and anything outside scope becomes a queue item instead of a prompt.</li>
+      </ul>
+      <p class="proof">Happy to walk through the approval thread live, including a DROP and what the agent did next.</p>
+    </div>
+  </details>
+
+</article>
+
+</section>
+
+<section>
+  <h2>Agents in service</h2>
+  <p class="lede">Every agent I run, what it does, and the one thing it may not do. Each has a written definition it reads on every run.</p>
+  <div class="tablewrap">
+  <table class="agents">
+    <thead><tr><th>Agent</th><th>Job</th><th>Schedule</th><th>May not</th></tr></thead>
+    <tbody>
+      <tr><td>Bid Radar</td><td>Finds public solicitations in OR and WA, grades them, writes to Airtable</td><td>Mondays, 6 AM</td><td>Delete or change a decision status</td></tr>
+      <tr><td>Bid Desk</td><td>Drafts response packages from verified company facts</td><td>Weekdays, 7 AM</td><td>Submit, send, sign, or price</td></tr>
+      <tr><td>Criteria builder</td><td>Builds prior-authorization criteria documents for a health plan, QA-gated</td><td>On demand, per batch</td><td>Infer clinical content or show an unchecked document</td></tr>
+      <tr><td>Action items</td><td>Reads mail, documents, and meeting notes twice daily; writes deduplicated tasks to a table</td><td>Morning and 2 PM</td><td>Act on any item</td></tr>
+      <tr><td>Follow-up drafter</td><td>Drafts follow-up emails for estimates with no reply, from runbook and templates</td><td>Weekdays, 7 AM (paused)</td><td>Send</td></tr>
+      <tr><td>Daily digest</td><td>Summarizes the day's recordings and meeting notes into work and personal sections</td><td>Daily, 8 AM</td><td>Read raw transcripts</td></tr>
+      <tr><td>Morning feed</td><td>Cleans open tasks into Cadence's email list, read-only</td><td>Weekdays, 8:15 AM</td><td>Write to the source table</td></tr>
+      <tr><td>Lead coordinator</td><td>Catches new leads for a remodeling company, classifies, drafts a 3-month follow-up cadence</td><td>Scheduled</td><td>Auto-send, or write to an existing CRM</td></tr>
+      <tr><td>Luna</td><td>Approval queue, family calendar heads-ups, daily heartbeat</td><td>Always on</td><td>Act without an approved queue item</td></tr>
+      <tr><td>Librarian, Scout, Coder</td><td>Catalog techniques, map them to the roster, build and repair agent definitions</td><td>Daily and on demand</td><td>Coder is the only one that may edit another agent</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>Defaults, and what would change them</h2>
+
+  <p class="lede">These are starting positions, not fixed rules. Each comes from a cost I have seen, and each can change when the situation shows a different cost.</p>
+  <ul class="no">
+    <li>A person reads anything customer-facing before it goes out. The cost of one wrong email to a client is higher than the cost of a review step. When a message type has run clean for months and the downside of a miss is small, the review can become a sample instead of a gate.</li>
+    <li>Pricing, approvals, and money movement start as rules and people, not models. A rule can be audited and explained; a model's answer today may differ tomorrow. If a business has a pricing policy clear enough to write as a formula, the model can fill in the inputs and the formula can do the math.</li>
+    <li>Systems run on the organization's accounts, with documentation for whoever comes next. I hold this one firmly, because the alternative leaves a company dependent on one person.</li>
+    <li>If a formula can answer it, start with the formula. AI belongs where the input is language or judgment, not arithmetic. When inputs are messy, the model's job is to clean them up before the formula runs.</li>
+    <li>Map how the work actually flows, including exceptions, before choosing a tool. For a small, reversible build, a quick prototype can be cheaper than analysis, and the prototype becomes the discovery.</li>
+  </ul>
+
+</section>
+
+<section>
+  <h2>Also built</h2>
+  <ul class="also">
+    <li><span>Scope capture app</span><span>Phone-first remediation scope writer: speak, photograph, LiDAR-measure, export to PDF and PandaDoc. Internal alpha.</span></li>
+    <li><span>Hiring screener</span><span>Résumé plus job description in; weighted fifteen-minute screening form out as a fillable PDF.</span></li>
+    <li><span>Documentation suite</span><span>Master SOP, site-visit flow, sales playbook, and a 316-term glossary for an environmental services company. The knowledge base the systems above plug into.</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>How I build</h2>
+
+  <ol class="principles">
+    <li><b>Draft first; a person approves.</b><span>The system prepares the work; a person signs off. This limits liability and is what makes it acceptable to put automation next to customer email, contracts, and regulated documents. Autonomy is extended one task type at a time, based on track record.</span></li>
+    <li><b>Rules for the math, AI for the text.</b><span>Priority, pricing, deadlines, and permissions are formulas and code. The model reads, classifies, and writes. It does not do arithmetic.</span></li>
+    <li><b>Small first version, then expand from real use.</b><span>Build the smallest version that helps, keep a raw copy of every input, and add features only where use shows they are needed.</span></li>
+  </ol>
+  The build is about a third of the work. The rest is writing the procedure, training the people who will use it, and checking at thirty days whether they are. I have rolled out CRMs, onboarding programs, and reporting to retail sales teams, so the adoption part is familiar.</p>
+
+</section>
+
+<footer>Updated October 2026. Client names withheld; references from clients and managers available on request.</footer>
+</main>
+
+</body></html>
