@@ -32,7 +32,11 @@ h3{font-size:22px}
 p{margin:0;max-width:66ch}
 a{color:var(--accent)}
 .eyebrow{font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
-header{display:grid;gap:20px;padding-bottom:36px;border-bottom:1px solid var(--line)}
+header{display:grid;gap:20px;padding-bottom:36px;border-bottom:1px solid var(--line);grid-template-columns:1fr 220px;grid-template-areas:"eyebrow portrait" "h1 portrait" "lede portrait" "contact contact" "stack stack";column-gap:36px}
+header .eyebrow{grid-area:eyebrow}header h1{grid-area:h1}header .lede{grid-area:lede}header .contact{grid-area:contact}header .stack{grid-area:stack}
+.portrait{grid-area:portrait;margin:0;align-self:start}
+.portrait img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:3px}
+@media (max-width:700px){header{grid-template-columns:1fr;grid-template-areas:"portrait" "eyebrow" "h1" "lede" "contact" "stack"}.portrait{width:160px}}
 .lede{font-size:19px;color:var(--ink-2);max-width:62ch}
 .contact{display:flex;flex-wrap:wrap;gap:12px 24px;font-size:14px}
 .contact span{color:var(--ink-2)}
@@ -120,6 +124,7 @@ nav.index span.r{display:block;color:var(--ink-2);font-size:14px}
 
 <main id="top">
 <header>
+  <figure class="portrait"><img src="img/portrait.jpg" alt="Willie Horton, speaking to a room" width="720" height="864"></figure>
   <p class="eyebrow">Willie Horton, Vancouver, Washington</p>
   <h1>I build automation and AI systems for sales, operations, and document work, with a person approving anything that matters.</h1>
   <p class="lede">Fourteen years running retail sales teams, then estimating and sales in construction and remediation, where I saw leads wait a day for a reply and bids go unseen. I have built automations for small businesses since 2020, for my own work, fifteen clients, and a regional health plan. The method is the same each time: find where the hours and dollars go, build the smallest fix that works, put a person at the approval step, document it, train the people who use it.</p>
